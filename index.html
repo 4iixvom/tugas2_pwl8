@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Latihan Tailwind CSS</title>
+
+   <script src="https://cdn.tailwindcss.com"></script>
+
+   <link rel="stylesheet" href="./output.css">
+   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.x.x/dist/tailwind.min.css" rel="stylesheet">
+
+
+</head>
+<body class="bg-red-100 flex items-center justify-center min-h-screen p-6">
+   <div class="bg-white shadow rounded-lg p-6 max-w-md w-full">
+      <section id="title" class="text-center mb-6">
+         <h1 class="text-3xl text-gray-800">Todo List Application</h1>
+      </section>
+      <section id="input" class="flex gap-2 mb-4">
+         <input type="text" name="assignment" id="assignment" 
+                class="flex-1 border border-gray-400 rounded px-3 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-500"
+                placeholder="Inputkan tugas yang akan dikerjakan ...">
+         <input type="button" id="btn-tambah" value="TAMBAH" 
+                class="bg-gray-400 text-black- font-bold px-4 py-2 rounded hover:bg-gray-600 cursor-pointer">
+      </section>
+      <section id="output" class="mb-4">
+         <div class="bg-green-50 p-3 rounded shadow mb-2 flex justify-between items-center">
+            <span class="text-gray-700">Pekerjaan Senin</span>
+            <div class="flex gap-2">
+               <button class="bg-green-500 text-black-500 font-bold px-2 py-1 rounded hover:bg-green-600" onclick="markComplete(this)">Selesai</button>
+
+               <button class="bg-red-500 text-black font-bold px-2 py-1 rounded hover:bg-red-600" onclick="deleteTask(this)">Hapus</button>
+            </div>
+         </div>
+      </section>
+
+      <section id="output" class="mb-4">
+         <div class="bg-green-50 p-3 rounded shadow mb-2 flex justify-between items-center">
+            <span class="text-gray-700">Pekerjaan Selasa</span>
+            <div class="flex gap-2">
+               <button class="bg-green-500 text-black-500 font-bold px-2 py-1 rounded hover:bg-green-600" onclick="markComplete(this)">Selesai</button>
+
+               <button class="bg-red-500 text-black font-bold px-2 py-1 rounded hover:bg-red-600" onclick="deleteTask(this)">Hapus</button>
+            </div>
+         </div>
+      </section>
+
+      <section id="output" class="mb-4">
+         <div class="bg-green-50 p-3 rounded shadow mb-2 flex justify-between items-center">
+            <span class="text-gray-700">Mabar Minggu</span>
+            <div class="flex gap-2">
+               <button class="bg-green-500 text-black-500 font-bold px-2 py-1 rounded hover:bg-green-600" onclick="markComplete(this)">Selesai</button>
+
+               <button class="bg-red-500 text-black font-bold px-2 py-1 rounded hover:bg-red-600" onclick="deleteTask(this)">Hapus</button>
+            </div>
+         </div>
+      </section>
+      <script>
+         let btnTambah = document.getElementById('btn-tambah');
+         let output = document.getElementById('output');
+   
+         btnTambah.onclick = (e) => {
+            let input = document.getElementById('assignment');
+            let title = input.value.trim();
+            if (title === "") {
+               alert("Inputan masih kosong");
+               return;
+            }
+            let task = document.createElement("div");
+            task.id = `${Date.now()}`;
+            task.className = `bg-green-50 p-3 rounded shadow mb-2 flex justify-between items-center`;
+            task.innerHTML = `
+               <span class="text-gray-700">${title}</span>
+               <div class="flex gap-2">
+                  <button class="bg-green-500 text-black font-bold px-2 py-1 rounded hover:bg-green-600" data-task="${task.id}" onclick="markComplete(this)">Selesai</button>
+                  <button class="bg-red-500 text-black font-bold px-2 py-1 rounded hover:bg-red-600" data-task="${task.id}" onclick="deleteTask(this)">Hapus</button>
+               </div>
+            `;
+            output.appendChild(task);
+            input.value = "";
+            e.preventDefault();
+         };
+   
+         function markComplete(button) {
+            let taskId = button.getAttribute('data-task');
+            let taskElement = document.getElementById(taskId);
+            if (taskElement) {
+               taskElement.classList.toggle('line-through');
+               taskElement.classList.toggle('bg-green-100');
+            }
+         }
+   
+         function deleteTask(button) {
+            let taskId = button.getAttribute('data-task');
+            let taskElement = document.getElementById(taskId);
+            if (taskElement) {
+               taskElement.remove();
+            }
+         }
+      </script>
+
+
+   </div>
+
+</body>
+</html>
